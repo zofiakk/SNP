@@ -15,11 +15,9 @@ configfile: "config.yaml"
 if config["data"]["reference"].endswith(".gz"):
     config["data"]["reference"] = os.path.splitext(config["data"]["reference"])[0]
 
-print(config["data"]["reference"])
 
 reference_name = config["data"]["reference"].split("/")[-1]
 reference_name = reference_name.split(".")[0]
-print(reference_name)
 
 # Check if the reference is in supported file
 if not config["data"]["reference"].endswith(('.fa', '.fasta')):
@@ -42,7 +40,6 @@ if config["settings"]["reads"] == "pe":
 
 config["global"] = {}
 config["global"]["samples"] = set(sample_names)
-print(sample_names)
 
 # Reading file with control group into a list
 with open(config["data"]["control"]) as file:
@@ -50,11 +47,10 @@ with open(config["data"]["control"]) as file:
     control = [line.rstrip() for line in control]
     control = list(set(control))
 config["global"]["controls"] = control
-print("control", control)
+
 
 tests = list(set([x for x in sample_names if x not in control]))
 config["global"]["tests"] = tests
-print("tests", tests)
 
 config["global"]["type"] = ["snvs", "indels"]
 
