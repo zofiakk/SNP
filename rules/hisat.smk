@@ -24,6 +24,8 @@ rule hisat2_index:
         prefix = os.path.dirname(config["data"]["reference"]) + "/index_hisat/"
     log:
         "logs/hisat2/hisat2_index.log"
+    conda:
+        "../envs/ADP-project.yaml"
     threads:
         config["params"]["hisat"]["threads"]
     wrapper:
@@ -32,11 +34,13 @@ rule hisat2_index:
 rule hisat2_align:
     input:
       reads=mapping_input,
-      indx=expand(os.path.dirname(config["data"]["reference"]) + "/index_hisat/"+".{ix}.ht2", ix=range(1, 9))
+      indx=os.path.dirname(config["data"]["reference"]) + "/index_hisat/"
     output:
       "files/mapped/{sample}.bam"
     log:
         "logs/hisat2/hisat2_align_{sample}.log"
+    conda:
+        "../envs/ADP-project.yaml"
     params:
       extra="--rg ID:{sample} --rg SM:{sample}",
       idx=directory(os.path.dirname(config["data"]["reference"]) + "/index_hisat/")
@@ -45,3 +49,5 @@ rule hisat2_align:
     wrapper:
       "v1.4.0/bio/hisat2/align"     
 
+def get_hisat_report(sample):
+    return "logs/hisat2/" + sample + ".log"

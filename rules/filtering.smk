@@ -21,16 +21,33 @@ rule gatk_filter:
 
 
 samples_grouped_types = {"test": config["global"]["type"], "control": config["global"]["type"]}
-print(samples_grouped_types)
+#print(samples_grouped_types)
 
 
-def grouped_samples_filtered(wildcards):
-    return expand("files/calls/filtered/{groups}_{type}.filtered.vcf", type=samples_grouped_types[wildcards.groups], groups=wildcards.groups)
+
+rule sort_variants:
+    input:
+        vcf = "files/calls/filtered/{groups}_{type}.filtered.vcf",
+        refdict=".".join(config["data"]["reference"].split(".")[:-1]) + ".dict"
+    output:
+        vcf = "files/calls/filtered/{groups}_{type}.filtered.sorted.vcf"
+    log:
+        "logs/picard/sortvcf/{groups}_{type}.log"
+    shell:
+        "picard SortVcf " 
+        "INPUT={input.vcf} " 
+        "OUTPUT={output.vcf} "
+        "SEQUENCE_DICTIONARY={input.refdict} "
+        "> {log} 2>&1"
+
+
+def grouped_samples_filtered_sorted(wildcards):
+    return expand("files/calls/filtered/{groups}_{type}.filtered.sorted.vcf", type=samples_grouped_types[wildcards.groups], groups=wildcards.groups)
 
 
 rule combine_filtered:
     input:
-        vcfs=grouped_samples_filtered,
+        vcfs=grouped_samples_filtered_sorted,
         #vcfs=expand("files/calls/filtered/{wildcards.groups}_{type}.filtered.vcf", type=["snvs", "indels"])
     output:
         "files/calls/filtered/{groups}.filtered.vcf"

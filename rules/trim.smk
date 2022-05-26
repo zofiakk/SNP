@@ -11,7 +11,7 @@ rule trim_se:
 	message:
 		"Trimming FASTQ files with Trimmomatic"
 	log:
-		"logs/trimmomatic/trimmomatic_se_{sample}.log" 	    
+		"logs/trimmomatic/trimmomatic_{sample}.log" 	    
 	wrapper:
 		"v1.4.0/bio/trimmomatic/se"	
 
@@ -30,7 +30,16 @@ rule trim_pe:
 	message:
 		"Trimming FASTQ files with Trimmomatic" 
 	log:
-		"logs/trimmomatic/trimmomatic_pe_{sample}.log"  
+		"logs/trimmomatic/trimmomatic_{sample}.log"  
 	wrapper:
 		"v1.4.0/bio/trimmomatic/pe"
-		
+
+
+def get_trimming_report(sample):
+    if config["settings"]["reads"] == "se":
+        # se samples
+        return "logs/trimmomatic/trimmomatic_" + config["settings"]["reads"] + "_" + sample + ".log"
+    elif config["settings"]["reads"] == "pe":
+        # paired-end sample
+    	return "logs/trimmomatic/trimmomatic_" + config["settings"]["reads"] + "_" + sample + ".log"
+

@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from os import listdir
 from os.path import isfile, join
+import subprocess
 
 # =================================================================================================
 #     Setup
@@ -15,9 +16,11 @@ configfile: "config.yaml"
 if config["data"]["reference"].endswith(".gz"):
     config["data"]["reference"] = os.path.splitext(config["data"]["reference"])[0]
 
+#print(config["data"]["reference"])
 
 reference_name = config["data"]["reference"].split("/")[-1]
 reference_name = reference_name.split(".")[0]
+print(reference_name)
 
 # Check if the reference is in supported file
 if not config["data"]["reference"].endswith(('.fa', '.fasta')):
@@ -41,16 +44,19 @@ if config["settings"]["reads"] == "pe":
 config["global"] = {}
 config["global"]["samples"] = set(sample_names)
 
+#print(sample_names)
+
 # Reading file with control group into a list
 with open(config["data"]["control"]) as file:
     control = file.readlines()
     control = [line.rstrip() for line in control]
     control = list(set(control))
 config["global"]["controls"] = control
-
+#print("control", control)
 
 tests = list(set([x for x in sample_names if x not in control]))
 config["global"]["tests"] = tests
+#print("tests", tests)
 
 config["global"]["type"] = ["snvs", "indels"]
 
@@ -67,7 +73,6 @@ def get_sample_files(wildcards):
     curr_files = [i for i in all_files if i.startswith(wildcards.sample)]
     if len(curr_files) == 2 and config["settings"]["reads"] == "pe":
         if config["settings"]["trim"] == "true":
-            print(config["data"]["samples"] + curr_files[0])
             return {"r1": config["data"]["samples"] + curr_files[0], "r2": config["data"]["samples"] + curr_files[1]}
         else:
             return [config["data"]["samples"] + curr_files[0], config["data"]["samples"] + curr_files[1]]
@@ -110,7 +115,7 @@ include: "rules/duplicates.smk"
 
 # SplitNCigarReads
 if config["settings"]["type"] == "rna":
-    print("cigar")
+    #print("cigar")
     include: "rules/cigar.smk"
 else:
     raise Exception("Unknown type of sequenced data: " + config["settings"]["type"])    
@@ -130,11 +135,18 @@ include: "rules/filtering.smk"
 # Annotattion
 include: "rules/annotate.smk"
 
+# QC
+include: "rules/quality.smk"
 
-results = "data/results/"
+
+print(config["params"]["vep"]["data"]["species"])
+
 
 rule all:
     input:
+        "files/qc/multiqc.html",
+        #"files/vep/cache",
+        #"files/vep/plugins",
         "files/calls/filtered/control.filtered.vcf",
         "files/tables/control_snvs.raw.table",
         "files/tables/control_indels.raw.table",
@@ -142,8 +154,18 @@ rule all:
         "files/tables/test_snvs.raw.table",
         "files/tables/test_indels.raw.table",
         "files/figures/test_used_filters.png",
-        "files/figures/control_used_filters.png"
-        #"files/calls/control_snvs.vcf",
-        #"files/calls/test_snvs.vcf"
+        "files/figures/control_used_filters.png",
+        "files/calls/control_snvs.vcf",
+        "files/calls/test_snvs.vcf",
+        "files/calls/control_indels.vcf",
+        "files/calls/test_indels.vcf"
 
-
+rule decompress:
+    input:
+        config["data"]["reference"] + ".gz"
+    output:
+        config["data"]["reference"]
+    log:
+        "logs/decompress/" + reference_name + ".decompress.log"
+    shell:
+        "zcat {input} > {output}"

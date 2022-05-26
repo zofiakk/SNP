@@ -52,7 +52,6 @@ rule bwa_aln:
         "v1.4.0/bio/bwa/aln"
 
 
-# Trimming reads in accordance to their type (se/pe) and returning the results 
 def sai_files(wildcards):
     if config["settings"]["reads"] == "se":
         # SE reads
@@ -80,7 +79,7 @@ rule bwa_bam_pe:
         index=config["data"]["reference"],
         extra=get_extra,  # optional: Extra parameters for bwa.
         sort="samtools",
-        sort_order="coordinate",
+        #sort_order="coordinate",
     log:
         "logs/bwa/sai_to_bam/{sample}.log",
     wrapper:

@@ -67,7 +67,7 @@ checkpoint create_dict:
     input:
         config["data"]["reference"],
     output:
-        config["data"]["reference"].split(".")[0] + ".dict",
+        '.'.join(config["data"]["reference"].split(".")[:-1]) + ".dict",
     log:
         "logs/picard/create_dict.log",
     params:
@@ -82,4 +82,6 @@ checkpoint create_dict:
         "v1.4.0/bio/picard/createsequencedictionary"
 
 
-        
+def get_dedup_report(sample):
+    return "files/dedup/" + sample + ".metrics.txt"
+

@@ -1,7 +1,12 @@
+def get_files(wildcards):
+    # Stop at the snakemake checkpoint first to ensure that the fai file is available.
+    return checkpoints.reference_faidx.get().output[0], checkpoints.create_dict.get().output[0]
+
 rule splitncigarreads:
     input:
         bam="files/dedup/{sample}.bam",
         ref=config["data"]["reference"],
+        files=get_files,
     output:
         "files/dedup/{sample}.split.bam",
     log:

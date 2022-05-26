@@ -2,12 +2,12 @@
 data:
     #"path/to/data/samples/ given as a folder"
     # if reads are PE then they shouls share the same base_name + "_1"/"_2"
-    samples: '/mnt/c/Users/zosia/Desktop/Studia/mgr/ADP/projekt/data/'
+    samples: '/mnt/c/Users/zosia/Desktop/Studia/mgr/ADP/projekt/data_2/'
     #"path/to/data/reference.fa"
-    reference: '/mnt/c/Users/zosia/Desktop/Studia/mgr/ADP/projekt/data/reference/genome.fa'
+    reference: '/mnt/c/Users/zosia/Desktop/Studia/mgr/ADP/projekt/data_2/reference/GCA_000298735.1.fasta.gz'
     # path to file which specifies control group
     # one line = one base_name of file
-    control: '/mnt/c/Users/zosia/Desktop/Studia/mgr/ADP/projekt/data/control.txt'
+    control: '/mnt/c/Users/zosia/Desktop/Studia/mgr/ADP/projekt/data_2/control.txt'
 
 settings:
     # Option to check given data using trimmomatic
@@ -16,7 +16,7 @@ settings:
     
     # Select programm used used for read mapping.
     # Options: "hisat", "bwa", "bowtie2"
-    mapping: "bwa"
+    mapping: "hisat"
     
     # Reads type:
     # Options: "se", "pe"
@@ -41,6 +41,9 @@ settings:
     
 
 params:
+    fastqc:
+        threads:
+            6
     # Used only if trim == true
     # Parameters used while trimming sequencing data
     trimmomatic:
@@ -88,16 +91,14 @@ params:
         data:
             # Ensembl species name
             species:
-                "Schizosaccharomyces pombe"
+                "ovis_aries"
 
             # Should be the same as used vep version 
             release:
-                105
+                98
             build:
-
-            cache_url:
-                "http://ftp.ebi.ac.uk/ensemblgenomes/pub/fungi/current/variation/vep/schizosaccharomyces_pombe_vep_53_ASM294v2.tar.gz"
-
+                "R64-1-1"
+            
             plugins:
                 - LoFtool
         annotate:

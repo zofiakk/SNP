@@ -4,10 +4,8 @@ def get_files(wildcards):
 
 def input_files(wildcards):
     if config["settings"]["type"] == "dna":
-            print("DNA")
             return "files/dedup/{sample}.bam",
     elif config["settings"]["type"] == "rna":
-        print("rna")
         return "files/dedup/{sample}.split.bam",
     else:
         raise Exception("Unknown type of sequenced data: " + config["settings"]["type"])
@@ -25,9 +23,9 @@ rule haplotype_caller:
         extra="",
         java_opts="", 
     threads: 
-        2
+        config["params"]["gatk"]["haplotype"]["threads"]
     resources:
-        mem_mb=1024,
+        mem_mb=2048,
     wrapper:
         "v1.4.0/bio/gatk/haplotypecaller"
 
@@ -37,7 +35,7 @@ def get_vcfs(wildcards):
             sample=config["global"]["samples"])
 
 samples_grouped = {"test": config["global"]["tests"], "control": config["global"]["controls"]}
-print(samples_grouped)
+#print(samples_grouped)
 
 
 def grouped_samples(wildcards):
@@ -56,7 +54,7 @@ rule combine_gvcfs:
         extra="",  # optional
         java_opts="",  # optional
     resources:
-        mem_mb=1024,
+        mem_mb=2048,
     wrapper:
         "v1.4.0/bio/gatk/combinegvcfs"
 
@@ -92,7 +90,7 @@ rule genotype_gvcfs:
         extra="",  # optional
         java_opts="", # optional
     resources:
-        mem_mb=1024
+        mem_mb=2048
     wrapper:
         "v1.4.0/bio/gatk/genotypegvcfs"
 

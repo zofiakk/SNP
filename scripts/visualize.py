@@ -53,13 +53,14 @@ def load_data(snps_file_path, indels_file_path):
 
 def parse_filter_values(config_file_path):
     """Parse config file to extract filter values"""
+    variant_keys = {'SNPs': 'snvs', 'Indels': 'indels'}
+    filter_values = {v:{} for v in VARIANTS}
+
     with open(config_file_path, 'r') as stream:
         filters_dict = yaml.safe_load(stream)['params']['gatk']['filtering']
 
-    filter_values = {v:{} for v in VARIANTS}
-
     for variant in VARIANTS:
-      for filter in filters_dict[variant.lower()].split('||'):
+      for filter in filters_dict[variant_keys[variant]].split('||'):
         var, _, val = filter.split()
         filter_values[variant][var] = float(val)
 
@@ -101,5 +102,6 @@ def main():
     plt.savefig(args.output, format=args.fmt.lower())
     print(f"Visualizations of filter values have been created successfully: {args.output}.")
 
+    
 if __name__ == '__main__':
     main()
