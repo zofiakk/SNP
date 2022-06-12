@@ -44,6 +44,9 @@ rule multiqc:
         get_trimming_reports(),
         get_dedup_reports(),
         get_mapp_reports(),
+        #expand("files/annotated/{groups}_variants.html", groups=config["global"]["groups"] 
+        #                       ),"""
+        directory("files/annotated/"),
 
     output:
         "files/qc/multiqc.html"

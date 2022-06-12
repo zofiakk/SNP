@@ -1,10 +1,12 @@
 rule visualize:
 	input:
-		snps="files/tables/{groups}_snvs.raw.table",
-		indels="files/tables/{groups}_indels.raw.table",
+		s_c="files/tables/control_snvs.raw.table",
+		i_c="files/tables/control_indels.raw.table",
+		s_t="files/tables/test_snvs.raw.table",
+		i_t="files/tables/test_indels.raw.table",
 		configuration="config.yaml",
-		script="scripts/visualize.py"
+		script="scripts/visualize.py",
 	output:
-		"files/figures/{groups}_used_filters.png"
+		"files/figures/used_filters.png",
 	shell:
-		"python {input.script} -s {input.snps} -i {input.indels} -c {input.configuration} -o {output}"
+		"python {input.script} -sc {input.s_c} -st {input.s_t} -ic {input.i_c} -it {input.i_t} -c {input.configuration} -o {output}"

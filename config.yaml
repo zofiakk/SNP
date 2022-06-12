@@ -95,13 +95,17 @@ params:
 
             # Should be the same as used vep version 
             release:
-                98
+                105
             build:
-                "R64-1-1"
+                "Oar_v3.1"
             
             plugins:
-                - LoFtool
+                [LoFtool]
         annotate:
             threads: 6
+
+    bgzip:
+        threads:
+            6
                     
             

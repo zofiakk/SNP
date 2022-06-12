@@ -20,7 +20,6 @@ if config["data"]["reference"].endswith(".gz"):
 
 reference_name = config["data"]["reference"].split("/")[-1]
 reference_name = reference_name.split(".")[0]
-print(reference_name)
 
 # Check if the reference is in supported file
 if not config["data"]["reference"].endswith(('.fa', '.fasta')):
@@ -43,6 +42,7 @@ if config["settings"]["reads"] == "pe":
 
 config["global"] = {}
 config["global"]["samples"] = set(sample_names)
+config["global"]["groups"] = ["control", "test"]
 
 #print(sample_names)
 
@@ -138,27 +138,30 @@ include: "rules/annotate.smk"
 # QC
 include: "rules/quality.smk"
 
+# Isec
+include: "rules/joint.smk"
 
-print(config["params"]["vep"]["data"]["species"])
+# Final plots
+include: "rules/plots.smk"
 
 
 rule all:
     input:
         "files/qc/multiqc.html",
-        #"files/vep/cache",
-        #"files/vep/plugins",
-        "files/calls/filtered/control.filtered.vcf",
-        "files/tables/control_snvs.raw.table",
-        "files/tables/control_indels.raw.table",
-        "files/calls/filtered/test.filtered.vcf",
-        "files/tables/test_snvs.raw.table",
-        "files/tables/test_indels.raw.table",
-        "files/figures/test_used_filters.png",
-        "files/figures/control_used_filters.png",
-        "files/calls/control_snvs.vcf",
-        "files/calls/test_snvs.vcf",
-        "files/calls/control_indels.vcf",
-        "files/calls/test_indels.vcf"
+        "files/vep/cache",
+        "files/vep/plugins",
+        #"files/annotated/control_variants.annotated.vcf",
+        #"files/annotated/test_variants.annotated.vcf"
+        #"files/calls/filtered/control.filtered.vcf",
+        #"files/tables/control_snvs.raw.table",
+        #"files/tables/control_indels.raw.table",
+        #"files/calls/filtered/test.filtered.vcf",
+        #"files/tables/test_snvs.raw.table",
+        #"files/tables/test_indels.raw.table",
+        "files/figures/used_filters.png",
+        "files/figures/heatmaps.png",
+        "files/figures/venn.png",
+
 
 rule decompress:
     input:
