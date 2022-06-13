@@ -5,8 +5,7 @@ Snakemake pipeline for SNP and SNV detection starting from raw fastq files
 Julia Smolik, Jakub Białecki, Małgorzata Kukiełka,  Zofia Kochańska
 
 ## About
-In our project we will try to create a Snakemake pipeline for detection of SNPs using tools from GATK. 
-The only thing that the user will need to do is provide a config file specifying parameters (e.g. wether the data is a SE or PE) and locations of raw FASTQ(.GZ) files. 
+This program was developed as part of a project on the subject Architecture of large bioinformatics projects at the Faculty of Mathematics, Informatics and Mechanics, University of Warsaw. It is a Snakemake pipeline for SNP detection using tools from GATK. The only argument that the user will need to do is provide a config file specifying parameters (e.g., whether the data comes from single-end (SE) or pair-end (PE) sequencing as well as whether the input files are from DNA or RNA sequencing) and locations of raw FASTQ (.GZ) files.
 
 ## Getting started
 
@@ -63,5 +62,5 @@ where [number] is an integer indicating how many threads to use.
 * Variant calls (vcf file)
 * MultiQC report (includes summaries of the input data after data pre-processing)
 * Plots visualizing the found variants and comparing the results for the test and control group 
-* 
+
 Intermediate output files such as bam files are also kept. In addition to the above tools, there are other tools used to combine the steps. If you are interested in the details, please see the snakemake [rules](https://github.com/zofiakk/SNP/tree/main/rules) for each step.
