@@ -41,7 +41,7 @@ where [number] is an integer indicating how many threads to use.
 * Quality control
   * [MultiQC](https://multiqc.info)
 * Read trimming
-  * [trimmomatic](http://www.usadellab.org/cms/index.php?page=trimmomatic))
+  * [trimmomatic](http://www.usadellab.org/cms/index.php?page=trimmomatic)
 * Read mapping
   * [BWA](http://bio-bwa.sourceforge.net/bwa.shtml)
   * [BOWTIE2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
