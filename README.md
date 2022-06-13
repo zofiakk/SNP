@@ -30,3 +30,38 @@ $ snakemake -c [number] --use-conda
 ```
 where [number] is an integer indicating how many threads to use.
 
+## Pipeline overview
+
+### Input
+* Config file
+* Snakefile
+* Reference genome fasta file
+* Sequencing (DNA or RNA-seq) fasta files (single-end or pair-end)
+
+### Functions and tools used
+* Quality control
+  * [MultiQC](https://multiqc.info)
+* Read trimming
+  * [trimmomatic]([actual URL to navigate](http://www.usadellab.org/cms/index.php?page=trimmomatic))
+* Read mapping
+  * [BWA](http://bio-bwa.sourceforge.net/bwa.shtml)
+  * [BOWTIE2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+  * [HISAT2](http://daehwankimlab.github.io/hisat2/)
+* Marking of duplicates
+  * [MarkDuplicates](https://broadinstitute.github.io/picard/command-line-overview.html#MarkDuplicates)
+* Modification of reads
+  * [SplitNCigarReads](https://gatk.broadinstitute.org/hc/en-us/articles/360036858811-SplitNCigarReads)
+* Searching for variants
+  * [HaplotypeCaller](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller)
+  * [SelectVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037055952-SelectVariants)
+* Filtering and evaluation
+  * [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360036834871-VariantFiltration)
+  * [VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+  * [Custom scripts creating summary charts](https://github.com/zofiakk/SNP/tree/main/scripts)
+
+## Output
+* Variant calls (vcf file)
+* MultiQC report (includes summaries of the input data after data pre-processing)
+* Plots visualizing the found variants and comparing the results for the test and control group 
+* 
+Intermediate output files such as bam files are also kept. In addition to the above tools, there are other tools used to combine the steps. If you are interested in the details, please see the snakemake [rules](https://github.com/zofiakk/SNP/tree/main/rules) for each step.
