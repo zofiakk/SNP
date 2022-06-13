@@ -61,6 +61,6 @@ where [number] is an integer indicating how many threads to use.
 ## Output
 * Variant calls (vcf file)
 * MultiQC report (includes summaries of the input data after data pre-processing)
-* Plots visualizing the found variants and comparing the results for the test and control group 
+* Plots visualizing the found variants (and the filters used on them) and comparing the results for the test and control group 
 
 Intermediate output files such as bam files are also kept. In addition to the above tools, there are other tools used to combine the steps. If you are interested in the details, please see the snakemake [rules](https://github.com/zofiakk/SNP/tree/main/rules) for each step.
