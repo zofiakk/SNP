@@ -64,3 +64,8 @@ where [number] is an integer indicating how many threads to use.
 * Plots visualizing the found variants (and the filters used on them) and comparing the results for the test and control group 
 
 Intermediate output files such as bam files are also kept. In addition to the above tools, there are other tools used to combine the steps. If you are interested in the details, please see the snakemake [rules](https://github.com/zofiakk/SNP/tree/main/rules) for each step.
+
+## Documentation
+
+* [PDF version](https://github.com/zofiakk/SNP/blob/main/documentation.pdf)
+* [Online version](https://students.mimuw.edu.pl/~js406162/documentation/index.html)
