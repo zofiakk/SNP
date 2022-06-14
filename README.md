@@ -35,7 +35,7 @@ where [number] is an integer indicating how many threads to use.
 * Reference genome fasta file
 * Sequencing (DNA or RNA-seq) fasta files (single-end or pair-end)
 
-### Used data
+### Data used
 * Pair-end sequencing data from RNA-seq (SRA database, under BioProject accession number PRJNA508203)
 * *Ovis aries* genome (ENV database, accession number GCA_000298735.1)
 
