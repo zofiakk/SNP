@@ -13,7 +13,6 @@ The user must have Anaconda installed. To run the program, the user does not nee
 
 ```
 $ conda env create -f environment.yml
-
 ```
 
 The program will load the raw DNA/RNA-seq files, perform pre-processing on them to eventually identify the SNPs and SNVs found in them. The program also performs annotation of the variants found and produces plots summarizing the results obtained.
@@ -25,7 +24,6 @@ In order to run the program, you have to be in the directory where the Snakefile
 
 ```
 $ snakemake -c [number] --use-conda
-
 ```
 where [number] is an integer indicating how many threads to use.
 
