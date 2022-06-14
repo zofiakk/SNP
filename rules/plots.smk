@@ -7,5 +7,6 @@ rule plot_final:
 	output:
 		venn="files/figures/venn.png",
 		heatmap="files/figures/heatmaps.png",
+		location="files/figures/variant_locations.png"
 	shell:
-		"python {input.script} -c {input.c} -t {input.t} -o2 {output.venn} -o1 {output.heatmap}"
+		"python {input.script} -c {input.c} -t {input.t} -o2 {output.venn} -o1 {output.heatmap} -o3 {output.location}"
