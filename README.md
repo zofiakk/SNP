@@ -1,7 +1,7 @@
 # SNP
 Snakemake pipeline for SNP and SNV detection starting from raw fastq files
 
-## Members
+## Authors
 Julia Smolik, Jakub Białecki, Małgorzata Kukiełka,  Zofia Kochańska
 
 ## About
