@@ -168,11 +168,11 @@ def main():
     args = parse_arguments()
 
     # prepare data structures
-    dfs = {'control': None, 'test': None}
+    dfs = {'control': args.control, 'test': args.test}
     long_dfs = dict.fromkeys(dfs)
 
-    for group in dfs:
-        df = prepare_dataframe(f'{group}_variants.annotated.vcf')
+    for group, file in dfs.items():
+        df = prepare_dataframe(file)
         dfs[group] = df  # full data
         long_dfs[group] = wide_to_long_df(df)  # wide to long by ALT_*
 
