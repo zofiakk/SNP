@@ -35,6 +35,10 @@ where [number] is an integer indicating how many threads to use.
 * Reference genome fasta file
 * Sequencing (DNA or RNA-seq) fasta files (single-end or pair-end)
 
+## Used data
+* Pair-end sequencing data from RNA-seq (SRA database, under BioProject accession number PRJNA508203)
+* *Ovis aries* genome (ENV database, accession number GCA_000298735.1)
+
 ### Functions and tools used
 * Quality control
   * [MultiQC](https://multiqc.info)
@@ -67,3 +71,4 @@ Intermediate output files such as bam files are also kept. In addition to the ab
 
 * [PDF version](https://github.com/zofiakk/SNP/blob/main/documentation.pdf)
 * [Online version](https://students.mimuw.edu.pl/~js406162/documentation/index.html)
+
