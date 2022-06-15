@@ -40,8 +40,6 @@ where [number] is an integer indicating how many threads to use.
 * *Ovis aries* genome (ENV database, accession number GCA_000298735.1)
 
 ### Functions and tools used
-* Quality control
-  * [MultiQC](https://multiqc.info)
 * Read trimming
   * [trimmomatic](http://www.usadellab.org/cms/index.php?page=trimmomatic)
 * Read mapping
@@ -59,6 +57,8 @@ where [number] is an integer indicating how many threads to use.
   * [VariantFiltration](https://gatk.broadinstitute.org/hc/en-us/articles/360036834871-VariantFiltration)
   * [VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
   * [Custom scripts creating summary charts](https://github.com/zofiakk/SNP/tree/main/scripts)
+* Quality control
+  * [MultiQC](https://multiqc.info)
 
 ## Output
 * Variant calls (vcf file)
